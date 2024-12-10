@@ -91,17 +91,11 @@ RMSE: 49,005.17
 R²: 0.75
 
 # How Each Plot Addresses Overfitting
-Boxplot:
-
-Detects and removes outliers to prevent models from focusing on extreme values.
-Correlation Heatmap:
-
-Identifies highly correlated features to reduce redundancy.
+Boxplot: Detects and removes outliers to prevent models from focusing on extreme values.
+Correlation Heatmap: Identifies highly correlated features to reduce redundancy.
 Scatter Plot:
 
 Highlights saturation and non-linear trends for targeted preprocessing.
-Geographical Plot:
-
-Visualizes spatial patterns to inform feature engineering.
+Geographical Plot: Visualizes spatial patterns to inform feature engineering.
 
 
