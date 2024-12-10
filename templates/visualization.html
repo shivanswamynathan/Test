@@ -1,0 +1,41 @@
+<!-- visualization.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Visualization</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Data Visualizations</h1>
+    </header>
+
+    <main>
+        <div class="plot-section">
+            <h2>Missing Values</h2>
+            <img src="{{ missing_plot_url }}" alt="Missing Values Plot">
+        </div>
+
+        <div class="plot-section">
+            <h2>Box Plot (Outliers)</h2>
+            <img src="{{ box_plot_url }}" alt="Box Plot">
+        </div>
+
+        <div class="plot-section">
+            <h2>Correlation Heatmap</h2>
+            <img src="{{ heatmap_url }}" alt="Correlation Heatmap">
+        </div>
+
+        <div class="plot-section">
+            <h2>Geographical Plot</h2>
+            <img src="{{ geo_plot_url }}" alt="Geographical Plot">
+        </div>
+
+        <div class="links">
+            <a href="/model_prediction">Go to Model Prediction</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,10 +1,12 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, send_file,request
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
-import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///housing_data.db'
@@ -52,19 +54,80 @@ X_test_scaled = scaler.transform(X_test)
 rf = RandomForestRegressor(n_estimators=100, random_state=42)
 rf.fit(X_train_scaled, y_train)
 
-# Page 1: Descriptive Stats
-@app.route('/descriptive_stats')
-def descriptive_stats():
-    desc_stats = data.describe().transpose()
-    return render_template('descriptive_stats.html', stats=desc_stats.to_html())
 
-# Page 2: Inferential Stats
-@app.route('/inferential_stats')
-def inferential_stats():
-    corr_matrix = data.corr()
-    return render_template('inferential_stats.html', corr_matrix=corr_matrix.to_html())
+def generate_plots():
+    # Plot 1: Missing values bar plot
+    missing_values = data.isnull().sum()
+    plt.figure(figsize=(12, 6))
+    missing_values.plot(kind='bar', color='blue')
+    plt.title('Number of Missing Values in Each Column')
+    plt.xlabel('Columns')
+    plt.ylabel('Number of Missing Values')
+    plt.xticks(rotation=45)
+    plt.savefig('static/missing_values.png')
+    plt.close()
 
-# Page 3: Model Prediction
+    # Plot 2: Box plot for outliers
+    num_columns = len(data.columns)
+    ncols = 3  # Number of columns in the grid layout
+    nrows = -(-num_columns // ncols)  # Calculate rows, ensuring all columns fit (ceiling division)
+
+    fig, axes = plt.subplots(nrows=nrows, ncols=ncols, figsize=(15, nrows * 5))
+    axes = axes.flatten()
+
+    # Generate a box plot for each column
+    for i, column in enumerate(data.columns):
+        data.boxplot(column=column, ax=axes[i])
+        axes[i].set_title(f'Boxplot: {column}')
+
+    # Hide any extra subplots (if columns < nrows * ncols)
+    for j in range(num_columns, len(axes)):
+        axes[j].set_visible(False)
+
+    plt.tight_layout()
+    plt.savefig('static/box_plot.png')
+    plt.close()
+
+    # Plot 3: Correlation heatmap
+    corr = data.corr()
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(corr, annot=True, linewidths=1, cmap="viridis")
+    plt.title('Correlation Heatmap')
+    plt.savefig('static/correlation_heatmap.png')
+    plt.close()
+
+    # Plot 4: Geographical scatter plot
+    plt.figure(figsize=(10, 8))
+    scatter = plt.scatter(data['longitude'], data['latitude'], alpha=0.4, s=data['population'] / 100,
+                          c=data['median_house_value'], cmap=plt.get_cmap("jet"))
+
+    # Add colorbar to the scatter plot
+    plt.colorbar(scatter, label='Median House Value')
+
+    plt.xlabel('Longitude')
+    plt.ylabel('Latitude')
+    plt.title('Geographical Plot of Median House Value')
+
+    # Save the plot to a file
+    plt.savefig('static/geographical_plot.png')
+    plt.close()
+
+# Generate plots when the app starts
+generate_plots()
+
+
+@app.route('/visualization')
+def visualization():
+    return render_template(
+        'visualization.html',
+        missing_plot_url='/static/missing_values.png',
+        box_plot_url='/static/box_plot.png',
+        heatmap_url='/static/correlation_heatmap.png',
+        geo_plot_url='/static/geographical_plot.png'
+    )
+
+
+
 @app.route('/model_prediction', methods=['GET', 'POST'])
 def model_prediction():
     if request.method == 'POST':

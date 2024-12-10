@@ -1,35 +1,93 @@
+<!-- model_prediction.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model Prediction</title>
+    <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    <h1>Model Prediction</h1>
-    <form method="POST">
-        Longitude: <input type="text" name="longitude"><br>
-        Latitude: <input type="text" name="latitude"><br>
-        Housing Median Age: <input type="text" name="housing_median_age"><br>
-        Total Rooms: <input type="text" name="total_rooms"><br>
-        Total Bedrooms: <input type="text" name="total_bedrooms"><br>
-        Population: <input type="text" name="population"><br>
-        Households: <input type="text" name="households"><br>
-        Median Income: <input type="text" name="median_income"><br>
-        Ocean Proximity Near Bay: <input type="text" name="ocean_proximity_NEAR_BAY"><br>
-        Ocean Proximity Inland: <input type="text" name="ocean_proximity_INLAND"><br>
-        Ocean Proximity Near Ocean: <input type="text" name="ocean_proximity_NEAR_OCEAN"><br>
-        Ocean Proximity Island: <input type="text" name="ocean_proximity_ISLAND"><br>
-        <input type="submit" value="Predict">
-    </form>
+    <header>
+        <h1>Model Prediction</h1>
+    </header>
 
-    {% if prediction %}
-        <h3>Predicted House Price: {{ prediction }}</h3>
-    {% endif %}
+    <main>
+        <form method="POST">
+            <div class="form-group">
+                <label for="longitude">Longitude:</label>
+                <input type="text" id="longitude" name="longitude" required>
+            </div>
 
-    <br>
-    <a href="/descriptive_stats">Go to Descriptive Stats</a>
-    <br>
-    <a href="/inferential_stats">Go to Inferential Stats</a>
+            <div class="form-group">
+                <label for="latitude">Latitude:</label>
+                <input type="text" id="latitude" name="latitude" required>
+            </div>
+
+            <div class="form-group">
+                <label for="housing_median_age">Housing Median Age:</label>
+                <input type="text" id="housing_median_age" name="housing_median_age" required>
+            </div>
+
+            <div class="form-group">
+                <label for="total_rooms">Total Rooms:</label>
+                <input type="text" id="total_rooms" name="total_rooms" required>
+            </div>
+
+            <div class="form-group">
+                <label for="total_bedrooms">Total Bedrooms:</label>
+                <input type="text" id="total_bedrooms" name="total_bedrooms" required>
+            </div>
+
+            <div class="form-group">
+                <label for="population">Population:</label>
+                <input type="text" id="population" name="population" required>
+            </div>
+
+            <div class="form-group">
+                <label for="households">Households:</label>
+                <input type="text" id="households" name="households" required>
+            </div>
+
+            <div class="form-group">
+                <label for="median_income">Median Income:</label>
+                <input type="text" id="median_income" name="median_income" required>
+            </div>
+            <div class="form-group">
+                <label><p>CHOOSE ANY ONE OCEAN PROXIMITY BY ENTERING 1, AND ASSIGN 0 TO THE REMAINING ROWS.</p></label>
+            </div>
+
+            <div class="form-group">
+                <label for="ocean_proximity_NEAR_BAY">Ocean Proximity (Near Bay):</label>
+                <input type="text" id="ocean_proximity_NEAR_BAY" name="ocean_proximity_NEAR_BAY" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ocean_proximity_INLAND">Ocean Proximity (Inland):</label>
+                <input type="text" id="ocean_proximity_INLAND" name="ocean_proximity_INLAND" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ocean_proximity_NEAR_OCEAN">Ocean Proximity (Near Ocean):</label>
+                <input type="text" id="ocean_proximity_NEAR_OCEAN" name="ocean_proximity_NEAR_OCEAN" required>
+            </div>
+
+            <div class="form-group">
+                <label for="ocean_proximity_ISLAND">Ocean Proximity (Island):</label>
+                <input type="text" id="ocean_proximity_ISLAND" name="ocean_proximity_ISLAND" required>
+            </div>
+
+            <input type="submit" value="Predict">
+        </form>
+
+        {% if prediction %}
+            <h3>Predicted House Price: {{ prediction }}</h3>
+        {% endif %}
+
+        <div class="links">
+            <a href="/visualization">Go to visualization</a>
+
+        </div>
+    </main>
 </body>
 </html>
