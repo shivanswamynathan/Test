@@ -93,9 +93,14 @@ R²: 0.75
 # How Each Plot Addresses Overfitting
 Boxplot: Detects and removes outliers to prevent models from focusing on extreme values.
 Correlation Heatmap: Identifies highly correlated features to reduce redundancy.
-Scatter Plot:
-
-Highlights saturation and non-linear trends for targeted preprocessing.
+Scatter Plot:Highlights saturation and non-linear trends for targeted preprocessing.
 Geographical Plot: Visualizes spatial patterns to inform feature engineering.
+
+# web application
+![Screenshot (382)](https://github.com/user-attachments/assets/85e378de-805f-4f82-ba68-d963a448f73c)
+
+
+
+
 
 
