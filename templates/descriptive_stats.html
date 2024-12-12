@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descriptive Statistics</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Descriptive Statistics</h1>
+    </header>
+
+    <main>
+        <h2>Statistics Table</h2>
+        <div class="stats-table-container">
+            {{ stats_html|safe }}
+        </div>
+
+        <div class="links">
+            <a href="/visualization">Go to Visualizations</a>
+            <a href="/model_prediction">Go to Model Prediction</a>
+        </div>
+    </main>
+</body>
+</html>
