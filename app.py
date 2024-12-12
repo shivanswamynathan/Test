@@ -7,10 +7,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 import os
+from config import config
 
+
+# Initialize Flask app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///housing_data.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Load the configuration based on the environment
+env = os.getenv('FLASK_ENV', 'development')
+app.config.from_object(config[env])
+
+# Initialize SQLAlchemy
 db = SQLAlchemy(app)
 
 # Database Model to store input data
@@ -114,6 +121,12 @@ def generate_plots():
 
 # Generate plots when the app starts
 generate_plots()
+
+@app.route('/descriptive_stats')
+def descriptive_stats():
+    stats = data.describe().transpose()  # Transpose for better readability
+    stats_html = stats.to_html(classes='stats-table', border=0)
+    return render_template('descriptive_stats.html', stats_html=stats_html)
 
 
 @app.route('/visualization')
